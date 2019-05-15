@@ -1,0 +1,31 @@
+﻿
+@model List<ModelProject.NewsModel>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Any())
+{
+    <ul id="lookSee">
+        @foreach (var item in Model)
+        {
+            var Picpath = "/img/none.jpg";
+            if (!string.IsNullOrEmpty(item.ConvertImg))
+            { Picpath = "http://admin.shengyuan-edu.com//" + item.ConvertImg; }
+                 <li>
+                    <div class="gcont">
+                        <a href="@Url.Action("Detail", "Products", new { Id=@item.Id})" class="db">
+                            <p class="gcopic">
+                                <span style="background-image:url(@Picpath)"></span>
+                            </p>
+                            <p class="f14 mtit">@item.Name</p>
+                            <p class="f14 mpro">
+                                价格：<span class="red">&yen;@item.SalePrice</span>
+                            </p>
+                            <p class="f14 chujia"><span class="f18">@item.HitTimes</span>人围观</p>
+                        </a>
+                    </div>
+                </li>
+        }
+    </ul>
+}

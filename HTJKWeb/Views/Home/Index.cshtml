@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "首页";
+}
+
+@*<header id="header" class="header ycpurple">
+    <div class="disbox aubgs"></div>
+    <h1 class="bfx02 wh">香凝工艺</h1>
+    <div class="aubgs icon-search" id="headsosbox"></div>
+</header>*@
+<article class="godsconslider" id="godsconslider" style="margin-top:-44px;">
+    <div class="bd">
+        <ul id="sliderPic">
+            <li><img src="/images/b2.jpg" /></li>
+            <li><img src="/images/b3.jpg" /></li>
+        </ul>
+    </div>
+    <div class="hd"><ul></ul></div>
+</article>
+<script type="text/javascript">
+    TouchSlide({
+        slideCell: "#godsconslider",
+        titCell: ".hd ul",
+        mainCell: ".bd ul",
+        effect: "leftLoop",
+        autoPage: true,//自动分页
+        autoPlay: $('#godsconslider .bd li').length > 1 ? true : false  //自动播放
+    });
+</script>
+<div class="formalsosbox sosbg por">
+
+    <input name="productSearch" type="text" class="intext f14" id="IndexformalSearchTxt" placeholder="请输入搜索关键字">
+    <span class="formalbtn f16 poa" id="formalbtn">搜索</span><i class="corss" id="corss"></i>
+
+</div>
+
+<script type="text/javascript">
+    // 搜所按钮点击事件
+    $('#formalbtn').click(function () {
+        var serString = $("#IndexformalSearchTxt").val();
+        //var tmn = returnTmnNo();
+        if (serString == '') {
+            UsTips("请输入搜索关键字", 15500);
+            return false;
+        }
+        //if (!tmn || tmn == '') {
+        //    UsTips("缺少终端机号码");
+        //    return false;
+        //}
+        var sosurl = '/Home/ProdcutsSearch?keyWord=' + serString;
+
+        goUrl(sosurl);
+    });
+</script>
+
+@*<div class="mod_menu clr">
+    <div class="telnav01">
+        <a href="javascript:void(0);" onclick="goUrl('/XNProducts/ZWDZ')">
+            <div class="telbtn c01">
+                <span class="f_l">整屋定制</span>
+            </div>
+        </a>
+    </div>
+    <div class="telnav02">
+        <a href="javascript:void(0);" onclick="goUrl('/XNProducts/JJWX')">
+            <div class="telbtn c02">
+                <span class="f_l">家具维修</span>
+            </div>
+        </a>
+    </div>
+    <div class="telnav03">
+        <a href="javascript:void(0);" onclick="goUrl('/Products/Index')">
+            <div class="telbtn c03">
+                <span class="f_l">精品家具</span>
+            </div>
+        </a>
+    </div>
+    <div class="telnav04">
+        <a href="javascript:void(0);" onclick="goUrl('/XNProducts/GYLP')">
+            <div class="telbtn c04">
+                <span class="f_l">工艺礼品</span>
+            </div>
+        </a>
+    </div>
+</div>*@
+
+
+
+<article class="godstab">
+    <div class="indextabnav f15">
+        <ul>
+            <li class="on">我们的产品</li>
+        </ul>
+    </div>
+    <div class="godstabcent">
+        <div class="parameter1 ovh">
+            @Html.Action("PageList", "Products", new { Type=2,PageSize = 4})
+        </div>
+    </div>
+</article>
+
+
+   
+    

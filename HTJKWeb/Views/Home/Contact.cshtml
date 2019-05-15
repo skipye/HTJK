@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "联系我们";
+}
+<header id="header" class="header ycpurple">
+    <div class="aubgs icon-back" onclick="goUrl('@Url.Action("Index","Home")')"></div>
+    <h1 class="bfx02 wh">联系我们</h1>
+    <div class="aubgs icon-menu" id="navmore"></div>
+</header>
+@Html.Action("_RightTopNav","Home")
+<!--header end-->
+
+
+<div class="content">
+    <div class="contactus">
+        <p style="color: #0a83d8; font-weight:700; font-size:1.6rem;margin-top:30px;">华体健康管理（上海）有限公司</p>
+        <p>公司地址：上海市宝山区沪太路7690号1001室</p>
+        <p class="red">华体健康管理，您身边的健康管理专家！</p>
+
+        <p style="line-height:30px;color:red;">如您对我们的产品有任何疑问，您都可以直接微信联系我们！或者电话联系我们！</p>
+    </div>
+     
+
+</div>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ow29ANFSyXM6nf6cYl14GdDI"></script>
+<script type="text/javascript">
+            // 百度地图API功能
+            var map = new BMap.Map("map");
+            var point = new BMap.Point(121.058537, 31.082668);
+            var marker = new BMap.Marker(point);  // 创建标注
+            map.addOverlay(marker);              // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom(true);
+            var opts = {
+                width: 250,     // 信息窗口宽度
+                height: 80,     // 信息窗口高度
+                title: "<span style='font-size:16px;color:#0a79d8;font-weight: bold'>华体健康管理（上海）有限公司</span>", // 信息窗口标题
+                enableMessage: true,//设置允许信息窗发送短息
+                message: "上海市宝山区沪太路7690号1001室"
+            }
+            var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;line-height:140%'>上海市宝山区沪太路7690号1001室</p>", opts);  // 创建信息窗口对象
+            map.openInfoWindow(infoWindow, point); //开启信息窗口
+            marker.addEventListener("click", function () {
+                map.openInfoWindow(infoWindow, point); //开启信息窗口
+            });
+</script>
+
+</div>
+
+
+
+
+  
+
+ 
+
+ 

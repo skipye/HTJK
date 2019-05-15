@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="97cd4ce0edb544679d0859eff3562de6" Name="关系图1">
+        <EntityTypeShape EntityType="HTJKModel.A_Menu" Width="1.5" PointX="7.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTJKModel.A_News" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTJKModel.A_News_File" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTJKModel.A_NewsType" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTJKModel.A_Role" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTJKModel.A_User" Width="1.5" PointX="10.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="HTJKModel.FK_A_News_A_NewsType" ManuallyRouted="false" />
+        <AssociationConnector Association="HTJKModel.FK_A_News_File_A_News" ManuallyRouted="false" />
+        <AssociationConnector Association="HTJKModel.A_NewsTypeA_NewsType" />
+        <AssociationConnector Association="HTJKModel.A_MenuA_Menu" />
+        <EntityTypeShape EntityType="HTJKModel.WorkLogs" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HTJKModel.Address_Info" Width="1.5" PointX="1.5" PointY="7.125" />
+        <EntityTypeShape EntityType="HTJKModel.MemberInfo" Width="1.5" PointX="4.25" PointY="7.125" />
+        <AssociationConnector Association="HTJKModel.Address_InfoMemberInfo" />
+        <EntityTypeShape EntityType="HTJKModel.OrderInfo" Width="1.5" PointX="9.5786378167470172" PointY="25.482457724158866" />
+        <EntityTypeShape EntityType="HTJKModel.OrderProductsInfo" Width="1.5" PointX="7.3062255733209778" PointY="27.561120627243593" />
+        <EntityTypeShape EntityType="HTJKModel.WX_Order_Commission_Logs" Width="1.5" PointX="8.606260661318089" PointY="19.696468004815497" />
+        <EntityTypeShape EntityType="HTJKModel.WX_Order_FR_Logs" Width="1.5" PointX="11.375" PointY="13" />
+        <AssociationConnector Association="HTJKModel.FK_OrderInfo_Address_Info" />
+        <AssociationConnector Association="HTJKModel.FK_OrderInfo_MemberInfo" />
+        <AssociationConnector Association="HTJKModel.FK_OrderProductsInfo_OrderInfo" />
+        <EntityTypeShape EntityType="HTJKModel.WXReturnInfo" Width="1.5" PointX="10.75" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
