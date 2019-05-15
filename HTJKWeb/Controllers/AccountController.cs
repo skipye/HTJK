@@ -49,7 +49,6 @@ namespace HTJKWeb.Controllers
                 }
                 else { GetOpenId(); }
             }
-
             return View();
         }
         public ActionResult LogOn(string userCode, string passWord)
