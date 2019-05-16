@@ -47,9 +47,10 @@ namespace HTJKWeb.Controllers
         public ActionResult MemberSubmit(MemberModel Models)
         {
             Guid UserId = Models.Id;
-            if (USer.AddUser(Models, out UserId) == true)
+            string MemNum = "";
+            if (USer.AddUser(Models, out UserId,out MemNum) == true)
             {
-                string UserAuthority = Models.Name + "|" + Models.Id;
+                string UserAuthority = Models.Name + "|" + Models.Id+ "|" + MemNum;
                 System.Web.Security.FormsAuthentication.SetAuthCookie(UserAuthority, false);
                 return RedirectToAction("Index", "Member");
             }

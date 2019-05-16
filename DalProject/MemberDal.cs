@@ -49,17 +49,15 @@ namespace DalProject
         }
         
         //添加和修改用户信息
-        public void AddUser(MemberModel Models, out Guid UserId)
+        public void AddUser(MemberModel Models, out Guid UserId, out string MemberNumber)
         {
-
+            string Mn = "";
             using (var db = new HTJKEntities())
             {
                 int Stoct = 0;
                 
                 if (Models.Id != null && Models.Id != Guid.Empty)
                 {
-                   
-
                     var Tabels = db.MemberInfo.Where(k => k.Id == Models.Id).FirstOrDefault();
                     Tabels.userName = Models.Name;
                     Tabels.RealName = Models.RealName;
@@ -69,8 +67,6 @@ namespace DalProject
                     Tabels.Sex = Models.Sex;
                     Tabels.Stock = Tabels.Stock > 0 ? Tabels.Stock + Stoct : Stoct;
                     Tabels.ZStock = Tabels.ZStock > 0 ? Tabels.ZStock + Stoct : Stoct;
-
-                    
                 }
                 else
                 {
@@ -91,6 +87,7 @@ namespace DalProject
                     Tabels.Gold = 0;
                     Tabels.State = Models.RealName != null && Models.RealName == "微信注册用户" ? false : true;
                     Tabels.MemberNumber = "HT" + WxPayApi.GenerateTimeStamp();
+                    Mn = Tabels.MemberNumber;
                     Tabels.OpenId = Models.OpenId;
                     if (!string.IsNullOrEmpty(Models.RequestNumber))
                     {
@@ -106,9 +103,10 @@ namespace DalProject
                         }
                     }
                     db.MemberInfo.Add(Tabels);
-                   
                 }
                 UserId = Models.Id;
+
+                MemberNumber = Mn;
                 db.SaveChanges();
             }
         }

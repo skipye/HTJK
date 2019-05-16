@@ -1,7 +1,49 @@
 ﻿@{
-    ViewBag.Title = "About";
+    Layout = null;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>关于我们</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <link href="@Url.Content("~/css/public-mob.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/css/mcomm.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/css/News.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/proDetail.css")" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="@Url.Content("~/js/zepto.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/common.js")"></script>
+    <script type="text/javascript" src="@Url.Content("/js/goTops.js")"></script>
+</head>
+<body data-marpad="padding" data-fixtop="44" data-fixbot="50">
+    <!--header Start-->
+    <header id="header" class="header ycpurple">
+        <div class="aubgs icon-back" onclick="goUrl('@Url.Action("Index","Home")')"></div>
+        <h1 class="bfx02 wh">关于华体</h1>
+        <div class="aubgs icon-menu" id="navmore"></div>
+    </header>
+    @Html.Action("_RightTopNav", "Home")
+    <!--header end-->
+    <div class="content">
+        <h2>关于华体</h2>
+        <h6>华体健康科学与工程研究院</h6>
+        <div class="article mt10" id="godsConTxt">
+            <p style="text-indent:2em;">华体健康科学与工程研究院是在“健康中国”背景下由华体健康管理（上海）有限公司全资投资筹建的集产、学、研、教为一体的健康科学领域的高端智库及学术研究平台。目前正与上海若干所一流大学洽谈联合共建事宜。主要从事非医疗健康管理领域的科学研究、产品开发和市场推广工作，包括人体健康检测、健康评价和健康干预（运动、营养、心理以及生活方式和习惯等干预手段）的研究。</p>
+            <p class="mt10" style="text-indent:2em;">华体健康科学与工程研究院围绕“健康中国”战略，致力于打造健康校园、健康社区、健康家庭、健康个人的内在联动，切实解决民生健康问题，从而支撑我国健康产业的发展。研究所立足上海、辐射长三角、服务全国，针对我国居民亚健康指标体系缺失、慢病预防与健康促进的方法匮乏等重大问题，以我国居民多发的慢性非传染性疾病（糖尿病、肥胖、高血压等）为研究对象，按照体医融合、非医疗健康管理的理念进行布局，通过组建体医专家库、建设健康管理信息系统、创建非医疗健康管理专业、培养非医疗健康管理人才等，为国民提供个性化非医疗健康管理综合解决方案。</p>
+        </div>
+    </div>
+    <div id="gotop" class="gotop"></div>
+    <script type="text/javascript">
+        $(function () {
+        //返回顶部插件引用
+        $(window).goTops({ toBtnCell: "#gotop", posBottom: 70 });
+    });
+
+    </script>
+</body>
+</html>
