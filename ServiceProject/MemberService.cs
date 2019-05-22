@@ -103,5 +103,21 @@ namespace ServiceProject
                 throw new Exception(ex.Message);
             }
         }
+        public int? GetReMessageFalseConut(Guid? UserId)
+        {
+            try { return UDal.GetReMessageFalseConut(UserId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public void UpdateMemberMessageState(Guid UserId)
+        {
+            try { UDal.UpdateMemberMessageState(UserId); }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

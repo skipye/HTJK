@@ -67,10 +67,10 @@ function saveMessage() {
         return;
     }
     $.post('/Message/AddMessage', {
-        "PId": PId, "StrContent": strContent
+        "StrContent": strContent
     }, function (date) {
-        if (date == "1")
-        { UsTips("提交成功。审核成功后才能查看！"); loadMessageList(); }
+            if (date == "1")
+            { UsTips("提交成功。我们会及时给您回复的！"); loadMessageList();  }
         else { UsTips("提交失败。"); }
     })
 

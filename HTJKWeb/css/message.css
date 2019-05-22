@@ -1,0 +1,45 @@
+﻿
+.content-block{}
+.block-title {background:#f9f9f9;padding:0 10px 0 15px;border-top:2px solid #43ccb5;border-bottom:1px solid #e1e4e5;overflow: hidden;height:40px;line-height:40px;}
+
+.comments{padding:0 8px}
+.comments .comment{padding:10px 7px;border-bottom:1px solid #ebedee;font-size:14px;line-height:22px}
+.comments .cmt-more,.comments .cmt-main{color:#32393d}
+.comments .cmt-more .cmt-time,.comments .cmt-more .cmt-order,.comments .cmt-main .cmt-time,.comments .cmt-main .cmt-order{font-size:12px;color:#868b98}
+.comments .cmt-more .cmt-order,.comments .cmt-main .cmt-order{line-height:16px;margin-bottom:3px}
+.comments .cmt-more blockquote,.comments .cmt-main blockquote{font-size:14px;padding-left:10px;border-left:1px solid #e1e4e5;color:#999}
+.comments .cmt-more blockquote a,.comments .cmt-main blockquote a{color:#999}
+
+.get-comments {width: 123px;}
+.extend {display: block; margin: 20px auto;}
+.extend .extend-txt {font-size: 16px;line-height: 1.84;text-indent: 3px;color: #868b98;}
+.extend .extend-icon {background: url(/images/icon-bgdown.png) center center no-repeat;width:18px;height:30px; -webkit-background-size: 18px 18px;background-size: 18px 18px;transform: rotate(-90deg); -ms-transform: rotate(-90deg); -webkit-transform: rotate(-90deg);}
+
+.cmt-form{overflow:hidden;margin-bottom:30px;}
+.cmt-form textarea{margin-bottom:10px}
+.cmt-form .form-foot{padding:0 8px;overflow:hidden}
+.cmt-form .form-foot .btn-primary{float:right}
+.cmt-form .form-login{display:block;width:95%;height:144px;border:1px solid #e1e4e5;margin:0 auto}
+.cmt-form .form-login span{display:block;color:#868b98;padding:20px;font-size:16px;}
+.cmt-form .form-login b{color:#0078b6}
+.cmt-form p{padding:0 18px;color:#868b98}
+
+.comment-entry {font-size: 14px;padding: 18px 0;border-bottom: 1px solid #b6b6b6; color: #000; overflow: hidden;margin:0px auto;width:98%;}
+.comment-entry .details span{color:#8b8b8b;font-size:14px}
+.comment-entry .f-light{color:#2d64b6;font-size:14px}
+.comment-entry .reply-comment{float:right;color:#2d64b6;font-size:12px;padding-right:10px;padding-top:20px;}
+
+.addres_addtextarea{min-height:24px; height:auto; padding:10px 0;line-height:24px; color:#333; width:100%; display:block;background:#fff;width:95%;height:144px;border:1px solid #e1e4e5;margin:0 auto}
+.addres_btn {padding:10px 0; margin-left:10px; margin-right:10px; text-shadow:0 1px 0 rgba(0,0,0,.2); color:#fff; background:#8E488E;display:block; text-align:center; border-radius:4px;}
+
+.btnreply {width:80px;
+    padding: 2px 0;
+    margin-left: 4px;
+    margin-right: 4px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.2);
+    color: #fff;
+    background: #8E488E;
+    display: block;
+    text-align: center;
+    border-radius: 4px;
+}

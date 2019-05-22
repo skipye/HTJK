@@ -98,7 +98,7 @@ namespace HTJKWeb.Controllers
                 string MemNum = "";
                 if (USer.AddUser(models, out UserId,out MemNum) == true)
                 {
-                    string UserAuthority = models.Name + "|" + UserId+""+ MemNum;
+                    string UserAuthority = models.Name + "|" + UserId+ "|" + MemNum;
                     Session["User"] = UserAuthority;
                     return Content("True");
                 }

@@ -74,10 +74,16 @@
 <p class="membg ger"></p>
 <article class="pwlist">
     <ul>
-        <li>
+        <li class="arowli">
+            <a onclick="goUrl('@Url.Action("Notices", "Member")')">
+                <em class="xxzx poa" style="background-color:#7f5d80;"></em>
+                <p class="f14">健康指数<span><i id="cartNum">@Model.MessageCount</i></span></p>
+            </a>
+        </li>
+        <li class="arowli no">
             <a href="javascript:void(0)">
                 <em class="receive poa" style="background-color:#9132ca;"></em>
-                <p class="f14">我的好友<span class="f14 red">（@Model.OneRequestUserCount 人</span></p>
+                <p class="f14">我的好友<span class="f14 red">（@Model.OneRequestUserCount 人）</span></p>
             </a>
         </li>
         @*<li class="arowli no">
@@ -132,12 +138,12 @@
         </li>
         @*<li class="arowli no">
             <a onclick="goUrl('@Url.Action("Notices", "Member", new { MessageCount =2 })')">
-                <em class="xxzx poa" style="background-color:#7f5d80;"></em> class="redDot" 
+                <em class="xxzx poa" style="background-color:#7f5d80;"></em> class="redDot"
                 <p class="f14">信息中心<span id="notice"><i id="cartNum">6</i></span></p>
             </a>
         </li>*@
 
-       
+
         <li class="arowli no">
             <a onclick="goUrl('@Url.Action("UserNots", "Member")')">
                 <em class="help poa" style="background-color:#f1594b;"></em>

@@ -206,110 +206,22 @@ namespace HTJKWeb.Controllers
         {
             return View();
         }
-
-        public class WXFilterAttribute : AuthorizeAttribute
+        public ActionResult Notices()
         {
-            protected override bool AuthorizeCore(HttpContextBase httpContext)
+            var MemberId = Guid.Empty;
+            if (Session["User"] != null)
             {
-                string openId = "";
-                string userAgent = httpContext.Request.UserAgent;
-                if (userAgent.IndexOf("MicroMessenger") <= -1)//不是微信浏览器
-                {
-                    return true;
-                }
-
-                if (!httpContext.User.Identity.IsAuthenticated)
-                {
-                    string appid = string.Empty;
-                    string secret = string.Empty;
-
-
-                    appid = WxPayConfig.APPID;
-                    secret = WxPayConfig.APPSECRET;
-
-                    var code = httpContext.Request["Code"];
-                    string returnUrl = HttpUtility.UrlDecode(httpContext.Request["ReturnUrl"] ?? "/");
-
-
-                    if (string.IsNullOrEmpty(code))
-                    {
-                        string host = httpContext.Request.Url.Host;
-                        string path = httpContext.Request.Path;
-                        string redirectUrl = "http://" + host + path + "?ReturnUrl=" + HttpUtility.UrlEncode(returnUrl);//重定向的url，这里不需要进行编码，在后面会自己编码
-                        //string redirectUrl = "http://m.shengyuan-edu.com" + path + "?ReturnUrl=" + HttpUtility.UrlEncode(returnUrl);//重定向的url，这里不需要进行编码，在后面会自己编码
-                        try
-                        {
-                            //todo:通过微信获取2.0授权的url
-                            string url = GetAuthorizeUrl(appid, redirectUrl, "state", "snsapi_base");
-
-                            httpContext.Response.Redirect(url);
-                        }
-                        catch (System.Exception ex)
-                        {
-                            httpContext.Response.Write("构造网页授权获取code的URL时出错，错误是：" + ex.Message);
-                            httpContext.Response.End();
-                        }
-                    }
-                    else
-                    {
-                        var client = new System.Net.WebClient();
-                        client.Encoding = System.Text.Encoding.UTF8;
-                        string url = GetAccessTokenUrl(appid, secret, code);
-                        var data = client.DownloadString(url);
-                        var obj = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
-                        string accessToken;
-                        if (!obj.TryGetValue("access_token", out accessToken))
-                        {
-                            httpContext.Response.Write("构造网页授权获取access_token的URL时出错");
-                            httpContext.Response.End();
-                        }
-                        if (obj["openid"] != null)
-                        {
-                            httpContext.Session["openId"] = obj["openid"];
-                            var Models = USer.IsWXLogin(openId);
-                            if (Models != null && Models.IsLogin == true)
-                            {
-                                string UserAuthority = Models.UserName + "|" + Models.UserId + "|" + Models.MemberNumber;
-                                httpContext.Session["User"] = UserAuthority;
-                                httpContext.Response.Redirect(returnUrl);
-                            }
-                            
-                        }
-
-                    }
-                }
-                return true;
+                string UserModel = Session["User"].ToString();
+                MemberId = new Guid(UserModel.Split('|')[1]);
             }
-            public override void OnAuthorization(AuthorizationContext filterContext)
+            else
             {
-                base.OnAuthorization(filterContext);
-                if (filterContext.HttpContext.Response.StatusCode == 401)
-                {
-                    filterContext.Result = new RedirectResult("/403.htm");//跳转异常页面
-                }
+                return RedirectToAction("Login", "Account", new { ReturnUrl = "/Member/Notices" });
             }
-
-            //扩展
-            public string GetAuthorizeUrl(string appId, string redirectUrl, string state, string scope, string responseType = "code")
-            {
-                if (!string.IsNullOrEmpty(redirectUrl))
-                {
-                    redirectUrl = HttpUtility.UrlEncode(redirectUrl, System.Text.Encoding.UTF8);
-                }
-                else
-                {
-                    redirectUrl = null;
-                }
-                object[] args = new object[] { appId, redirectUrl, responseType, scope, state };
-                return string.Format("https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type={2}&scope={3}&state={4}#wechat_redirect", args);
-            }
-            public string GetAccessTokenUrl(string appId, string secret, string code, string grantType = "authorization_code")
-            {
-                object[] args = new object[] { appId, secret, code, grantType };
-                string requestUri = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type={3}", args);
-                //return GetAccessTokenInfo(_httpClient.GetAsync(requestUri).Result.Content.ReadAsStringAsync().Result);
-                return requestUri;
-            }
+            int MessageCount = USer.GetReMessageFalseConut(MemberId)??0;
+            if (MessageCount > 0) { USer.UpdateMemberMessageState(MemberId); }
+            return View();
         }
+        
     }
 }

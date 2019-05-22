@@ -99,6 +99,9 @@
     <Compile Include="MemberInfo.cs">
       <DependentUpon>HTJK.tt</DependentUpon>
     </Compile>
+    <Compile Include="MemberMessage.cs">
+      <DependentUpon>HTJK.tt</DependentUpon>
+    </Compile>
     <Compile Include="OrderInfo.cs">
       <DependentUpon>HTJK.tt</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
       <DependentUpon>HTJK.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReplyMemMSG.cs">
+      <DependentUpon>HTJK.tt</DependentUpon>
+    </Compile>
     <Compile Include="S_Area.cs">
       <DependentUpon>ChinaModel.tt</DependentUpon>
     </Compile>

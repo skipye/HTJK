@@ -1,0 +1,79 @@
+﻿
+@model List<ModelProject.MessageModel>
+@{
+    Layout = null;
+    Guid[] arrtle = { Guid.Parse("BD80040B-9EA1-490D-A37D-E400E65D3E0F"),Guid.Parse("745F2F23-190A-4AB9-BEC4-B02594149EC0"),Guid.Parse("9D82ED70-5582-43A2-A83A-B450720D263C")};
+    var memberid = Guid.Empty;
+    if (Session["User"] != null)
+    {
+        string UserModel = Session["User"].ToString();
+        memberid = new Guid(UserModel.Split('|')[1]);
+    }
+}
+    <script src="~/js/mDialog.min.js"></script>
+    @if (Model != null && Model.Any())
+    {
+
+        foreach (var item in Model)
+        {
+    <article class="comment">
+        <footer class="cmt-more">
+            <address class="cmt-author">
+                @item.UserName
+                @if (arrtle.Contains(memberid)) { 
+                <div>
+                    <span class="btnreply fr gbs ovh db" ref="@item.Id" tel="@item.UserId">立即回复</span>
+                </div>}
+            </address>
+            <time class="cmt-time">@Convert.ToDateTime(item.CreateTime).ToString("yyyy-MM-dd HH:mm")</time>
+        </footer>
+        <div class="cmt-main">@item.StrContent</div>
+        @if (item.ReplyList != null && item.ReplyList.Any())
+        {
+            foreach (var item1 in item.ReplyList)
+            {
+                <article class="comment">
+                    <footer class="cmt-more">
+                        <address class="cmt-author red">苑老师 回复</address>
+                        <time class="cmt-time" style="color:red;">@Convert.ToDateTime(item1.CreateTime).ToString("yyyy-MM-dd HH:mm")</time>
+                    </footer>
+                    <div class="cmt-main" style="color:red;">@item1.StrContent</div>
+                </article>
+            }
+        }
+    </article>
+            
+        }
+
+    }
+
+<div id="replydialog" style="display:none;">@Html.TextArea("strContent", new { @class = "addres_addtextarea", @placeholder = "请输入您要回复的内容，限制200个字" })</div>
+
+<script type="text/javascript">
+    $(".btnreply").click(function () {
+         var timer = null;
+        var MemMsgId = $(this).attr("ref");
+        var ReplyMemberId = $(this).attr("tel");
+        var msg = $("#replydialog").html();
+        timer = setTimeout(function () {
+            m.open({
+            width: "90%",
+            height: 220,
+            content: "<div class='tc listinfo f16' style='width:100%;z-index:9999' id='reply'>" + msg + "</div>",
+            closeBtn: [true],
+            btnName: ['确定'],
+            btnStyle: ["color: #0e90d2;"],
+            maskClose: true,
+            yesfun: function () {
+                var strContent = $("#reply").children("#strContent").val();
+                var RUrl = "/Message/ReplyNotices";
+                if (strContent != null && strContent != "") {
+                    $.post(RUrl, { "StrContent": strContent, "MemMsgId": MemMsgId, "ReplyMemberId": ReplyMemberId }, function (d) { if (d == "1") { UsTips("回复成功！"); window.location.reload(); } });
+                } else { UsTips("请填写回复内容！"); return; }
+            },
+            nofun: null
+        });
+        }, 1000);
+        
+    });
+</script>

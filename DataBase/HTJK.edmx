@@ -14,8 +14,10 @@
           <EntitySet Name="A_User" EntityType="HTJKModel.Store.A_User" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Address_Info" EntityType="HTJKModel.Store.Address_Info" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MemberInfo" EntityType="HTJKModel.Store.MemberInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MemberMessage" EntityType="HTJKModel.Store.MemberMessage" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderInfo" EntityType="HTJKModel.Store.OrderInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderProductsInfo" EntityType="HTJKModel.Store.OrderProductsInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReplyMemMSG" EntityType="HTJKModel.Store.ReplyMemMSG" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkLogs" EntityType="HTJKModel.Store.WorkLogs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WX_Order_Commission_Logs" EntityType="HTJKModel.Store.WX_Order_Commission_Logs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WX_Order_FR_Logs" EntityType="HTJKModel.Store.WX_Order_FR_Logs" store:Type="Tables" Schema="dbo" />
@@ -39,6 +41,10 @@
           <AssociationSet Name="FK_OrderProductsInfo_OrderInfo" Association="HTJKModel.Store.FK_OrderProductsInfo_OrderInfo">
             <End Role="OrderInfo" EntitySet="OrderInfo" />
             <End Role="OrderProductsInfo" EntitySet="OrderProductsInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReplyMemMSG_MemberMessage" Association="HTJKModel.Store.FK_ReplyMemMSG_MemberMessage">
+            <End Role="MemberMessage" EntitySet="MemberMessage" />
+            <End Role="ReplyMemMSG" EntitySet="ReplyMemMSG" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="A_Menu">
@@ -173,6 +179,18 @@
           <Property Name="State" Type="bit" />
           <Property Name="OpenId" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="MemberMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StrContent" Type="nvarchar" MaxLength="250" />
+          <Property Name="MemberId" Type="uniqueidentifier" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="State" Type="bit" />
+        </EntityType>
         <EntityType Name="OrderInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -208,6 +226,20 @@
           <Property Name="ProductsName" Type="nvarchar" MaxLength="150" />
           <Property Name="ProductsConvertImg" Type="nvarchar" MaxLength="150" />
           <Property Name="Ordernum" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="ReplyMemMSG">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MemMsgId" Type="uniqueidentifier" />
+          <Property Name="StrContent" Type="nvarchar" MaxLength="250" />
+          <Property Name="MemberId" Type="uniqueidentifier" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="State" Type="bit" />
+          <Property Name="ReplyMemberId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="WorkLogs">
           <Key>
@@ -324,6 +356,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReplyMemMSG_MemberMessage">
+          <End Role="MemberMessage" Type="HTJKModel.Store.MemberMessage" Multiplicity="0..1" />
+          <End Role="ReplyMemMSG" Type="HTJKModel.Store.ReplyMemMSG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberMessage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReplyMemMSG">
+              <PropertyRef Name="MemMsgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -375,6 +419,12 @@
             <End Role="OrderProductsInfo" EntitySet="OrderProductsInfo" />
           </AssociationSet>
           <EntitySet Name="WXReturnInfo" EntityType="HTJKModel.WXReturnInfo" />
+          <EntitySet Name="MemberMessage" EntityType="HTJKModel.MemberMessage" />
+          <EntitySet Name="ReplyMemMSG" EntityType="HTJKModel.ReplyMemMSG" />
+          <AssociationSet Name="FK_ReplyMemMSG_MemberMessage" Association="HTJKModel.FK_ReplyMemMSG_MemberMessage">
+            <End Role="MemberMessage" EntitySet="MemberMessage" />
+            <End Role="ReplyMemMSG" EntitySet="ReplyMemMSG" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="A_Menu">
           <Key>
@@ -711,6 +761,46 @@
           <Property Type="DateTime" Name="CreateTime" Precision="3" />
           <Property Type="String" Name="is_subscribe" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="MemberMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="StrContent" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="MemberId" />
+          <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsRead" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="State" />
+          <NavigationProperty Name="ReplyMemMSG" Relationship="HTJKModel.FK_ReplyMemMSG_MemberMessage" FromRole="MemberMessage" ToRole="ReplyMemMSG" />
+        </EntityType>
+        <EntityType Name="ReplyMemMSG">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="MemMsgId" />
+          <Property Type="String" Name="StrContent" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="MemberId" />
+          <Property Type="String" Name="UserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsRead" />
+          <Property Type="DateTime" Name="CreateTime" Precision="3" />
+          <Property Type="Boolean" Name="State" />
+          <NavigationProperty Name="MemberMessage" Relationship="HTJKModel.FK_ReplyMemMSG_MemberMessage" FromRole="ReplyMemMSG" ToRole="MemberMessage" />
+          <Property Type="Guid" Name="ReplyMemberId" />
+        </EntityType>
+        <Association Name="FK_ReplyMemMSG_MemberMessage">
+          <End Type="HTJKModel.MemberMessage" Role="MemberMessage" Multiplicity="0..1" />
+          <End Type="HTJKModel.ReplyMemMSG" Role="ReplyMemMSG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberMessage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReplyMemMSG">
+              <PropertyRef Name="MemMsgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -950,6 +1040,34 @@
                 <ScalarProperty Name="openid" ColumnName="openid" />
                 <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
                 <ScalarProperty Name="out_trade_no" ColumnName="out_trade_no" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberMessage">
+            <EntityTypeMapping TypeName="HTJKModel.MemberMessage">
+              <MappingFragment StoreEntitySet="MemberMessage">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="StrContent" ColumnName="StrContent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReplyMemMSG">
+            <EntityTypeMapping TypeName="HTJKModel.ReplyMemMSG">
+              <MappingFragment StoreEntitySet="ReplyMemMSG">
+                <ScalarProperty Name="ReplyMemberId" ColumnName="ReplyMemberId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="StrContent" ColumnName="StrContent" />
+                <ScalarProperty Name="MemMsgId" ColumnName="MemMsgId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

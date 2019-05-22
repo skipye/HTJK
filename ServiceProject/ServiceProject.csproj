@@ -49,6 +49,7 @@
     <Compile Include="ChinaService.cs" />
     <Compile Include="MemberService.cs" />
     <Compile Include="MenuService.cs" />
+    <Compile Include="MessageService.cs" />
     <Compile Include="NewsService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -33,6 +33,7 @@ namespace DalProject
                               }).FirstOrDefault();
                 tables.OneRequestUserCount = RequestUserCount(tables.MemberNumber, 1);
                 tables.TowRequestUserCount = RequestUserCount(tables.MemberNumber, 2);
+                tables.MessageCount = GetReMessageFalseConut(UserId)??0;
                 return tables;
             }
         }
@@ -52,6 +53,7 @@ namespace DalProject
         public void AddUser(MemberModel Models, out Guid UserId, out string MemberNumber)
         {
             string Mn = "";
+            Guid UId = Guid.Empty;
             using (var db = new HTJKEntities())
             {
                 int Stoct = 0;
@@ -88,6 +90,7 @@ namespace DalProject
                     Tabels.State = Models.RealName != null && Models.RealName == "微信注册用户" ? false : true;
                     Tabels.MemberNumber = "HT" + WxPayApi.GenerateTimeStamp();
                     Mn = Tabels.MemberNumber;
+                    UId = Tabels.Id;
                     Tabels.OpenId = Models.OpenId;
                     if (!string.IsNullOrEmpty(Models.RequestNumber))
                     {
@@ -104,7 +107,7 @@ namespace DalProject
                     }
                     db.MemberInfo.Add(Tabels);
                 }
-                UserId = Models.Id;
+                UserId = UId;
 
                 MemberNumber = Mn;
                 db.SaveChanges();
@@ -255,6 +258,51 @@ namespace DalProject
                     db.SaveChanges(); return true;
                 }
                 else { return false; }
+            }
+        }
+
+        //获取会员回复列表
+        public List<ReplyModel> GetMemberReplyList(int PageIndex, int PageSize, Guid? UserId)
+        {
+            using (var db = new HTJKEntities())
+            {
+                var list = (from p in db.MemberMessage.Where(k => k.State == true)
+                            where UserId != null && UserId != Guid.Empty ? p.MemberId == UserId.Value : true
+                            orderby p.CreateTime descending
+                            select new ReplyModel
+                            {
+                                Id = p.Id,
+                                StrContent = p.StrContent,
+                                CreateTime = p.CreateTime,
+                                UserName = p.UserName,
+                                IsRead = p.IsRead
+
+                            }).Skip(PageIndex * PageSize).Take(PageSize).ToList();
+                return list;
+            }
+        }
+        
+        //更新会员信息阅读状态
+        public void UpdateMemberMessageState(Guid UserId)
+        {
+            using (var db = new HTJKEntities())
+            {
+                var list = db.ReplyMemMSG.Where(k => k.State == true && k.ReplyMemberId == UserId).ToList();
+                if (list != null)
+                {
+                    foreach (var item in list)
+                    {
+                        item.IsRead = true;
+                    }
+                }
+                db.SaveChanges();
+            }
+        }
+        public int? GetReMessageFalseConut(Guid? UserId)
+        {
+            using (var db = new HTJKEntities())
+            {
+                return db.ReplyMemMSG.Where(k => k.State == true && k.ReplyMemberId == UserId && k.IsRead == false).Count();
             }
         }
     }

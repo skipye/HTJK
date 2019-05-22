@@ -48,6 +48,7 @@
     <Compile Include="ChinaDal.cs" />
     <Compile Include="MemberDal.cs" />
     <Compile Include="MenuDal.cs" />
+    <Compile Include="MessageDal.cs" />
     <Compile Include="NewsDal.cs" />
     <Compile Include="OrderDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,56 @@
+﻿@model ModelProject.UserIdOrNameModel
+@{
+    Layout = null;
+    int totalPage = 1;
+    if (Model.TotalCount > 1)
+    {
+        totalPage = Model.TotalCount.Value / 20;
+    }
+    Guid[] arrtle = { Guid.Parse("BD80040B-9EA1-490D-A37D-E400E65D3E0F"),Guid.Parse("745F2F23-190A-4AB9-BEC4-B02594149EC0"),Guid.Parse("9D82ED70-5582-43A2-A83A-B450720D263C")};
+    var memberid = Guid.Empty;
+    if (Session["User"] != null)
+    {
+        string UserModel = Session["User"].ToString();
+        memberid = new Guid(UserModel.Split('|')[1]);
+    }
+}
+<link href="~/css/message.css" rel="stylesheet" />
+<script src="~/js/message.js?v=1" type="text/javascript"></script>
+<section class="cmt-form">
+    <div class="block-title">
+        <h2>填写健康指数</h2>
+    </div>
+    @if (Model.Name != null)
+    {
+        @Html.TextAreaFor(k => k.strContent, new { @class = "addres_addtextarea", @placeholder = "请输入空腹血糖、晚餐前后用量，限制200个字" })
+
+        <div class="addres_btn mt15 mb15 f16" onclick="saveMessage();">提交</div>
+    }
+    else
+    {
+        <a href="@Url.Action("Login", "Account", new { ReturnUrl = Model.ReturnUrl })" class="form-login">
+            <span>请<b>登录</b>发表评论</span>
+        </a>
+    }
+</section>
+<section class="content-block">
+    <div class="block-title">
+        <h2>健康指数回复列表</h2>
+    </div>
+    <div class="comments" id="messagelist" ref="0" rel="@totalPage" isadmin="@(arrtle.Contains(memberid)?"1":"0")"></div>
+    <section class="myorde_nocart mt30" style="display: none;" id="myorde_nocart">
+        <p class="f14 db tc"><span class="pt10 pb5 g9 db">╯▂╰ 到底了,没有更多了！</span></p>
+    </section>
+    <div class="loadingbox" id="loadingbox" style="display: -webkit-box;">
+        <i class="loadingrdu"><img src="/images/loading.gif" /></i>
+        <em class="ml5 f15">正在努力加载</em>
+    </div>
+    <div style="height:30px;"></div>
+</section>
+
+<script type="text/javascript">
+    $(function () {
+        loadMessageList();
+    });
+
+</script>

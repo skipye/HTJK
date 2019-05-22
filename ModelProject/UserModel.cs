@@ -35,12 +35,4 @@ namespace ModelProject
     {
         public string Name { get; set; }
     }
-    public class UserCurrentModel
-    {
-        public int UserId { get; set; }
-        public string UserCode { get; set; }
-        public string UserName { get; set; }
-        public int departmentId { get; set; }
-        public string department { get; set; }
-    }
 }
